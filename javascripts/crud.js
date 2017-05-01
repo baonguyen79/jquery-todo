@@ -30,8 +30,23 @@ var FbApi = ((oldCrap) => {
 	  		FbApi.setSingleTodo(newTodo);
 
 	  		resolve();
-	  	})
+	  	});
 		
+	};
+
+	oldCrap.checker = (id) => {
+		return new Promise((resolve, reject) => {
+			FbApi.setChecker(id);
+			resolve();
+		});
+	};
+
+
+	oldCrap.deleteTodo = (id) => {
+		return new Promise ((resolve, reject) => {
+			FbApi.doDelete(id);
+			resolve();
+		});
 	};
 
 	return oldCrap;
