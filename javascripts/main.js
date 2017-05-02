@@ -51,13 +51,14 @@ $(document).ready(function(){
       }).catch((error) => {
         console.log("addTodo error", error);
       });      
-    }})
+    }
+  });
 
 
 	//delete todo
 	$('.main-container').on('click', '.delete', (e) => {
-		FbApi.deleteTodo(apiKeys, e.target.id).
-		then(() => {
+		FbApi.deleteTodo(apiKeys, e.target.id)
+		.then(() => {
 			FbApi.writeToDom(apiKeys);
 		})
 		.catch((error) => {
