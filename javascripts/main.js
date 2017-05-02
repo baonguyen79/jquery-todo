@@ -55,6 +55,21 @@ $(document).ready(function(){
 
 
 	//edit todo
+	$('.main-container').on('click', '.edit' , (e) => {
+		let editText = $(e.target).closest('.col-xs-4').siblings('.col-xs-8').find('.task').html();
+		FbApi.editTodo(e.target.id).then(() => {
+			$('.list-container').addClass('hide');
+			$('.new-container').removeClass('hide');
+			$('#add-todo-text').val(editText);
+			console.log("editText", editText);
+
+		})
+		.catch((error) => {
+			console.log("error from editTodo" , error);
+		});
+	});
+
+
 
 	//complete todo
 	$('.main-container').on('click', 'input[type="checkbox"]', (e) => {
