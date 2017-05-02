@@ -34,7 +34,7 @@ var FbApi = ((oldCrap) => {
 		
 	};
 
-	oldCrap.checker = (id) => {
+	oldCrap.checker = (apiKeys, id) => {
 		return new Promise((resolve, reject) => {
 			FbApi.setChecker(id);
 			resolve();
@@ -42,14 +42,22 @@ var FbApi = ((oldCrap) => {
 	};
 
 
-	oldCrap.deleteTodo = (id) => {
+	oldCrap.deleteTodo = (apiKeys, id) => {
 		return new Promise ((resolve, reject) => {
-			FbApi.doDelete(id);
+			 $.ajax({
+			 	method: `DELETE`,
+			 	url:`${apiKeys.databaseURL}/items/${id}.json`
+			 }).done(() => {
+			 	resolve();
+			 }).fail(() => {
+			 	reject(error);
+			 })
+			
 			resolve();
 		});
 	};
 
-oldCrap.editTodo = (id) => {
+oldCrap.editTodo = (apiKeys, id) => {
 		return new Promise ((resolve, reject) => {
 			FbApi.doDelete(id);
 			resolve();
