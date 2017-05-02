@@ -1,5 +1,12 @@
 var FbApi = ((otherOldCrap) => {
 
+
+otherOldCrap.countTask = () => {
+    let remainingTask = $('#incomplete-tasks li').length;
+    $('#counter').hide().fadeIn(300).html(remainingTask);
+  };
+
+
   otherOldCrap.writeToDom = (apiKeys) => {
     FbApi.getTodos(apiKeys).then((results) => {
       let todos = results;
@@ -34,10 +41,20 @@ var FbApi = ((otherOldCrap) => {
 
       $('#completed-tasks').html(doneString);
       $('#incomplete-tasks').html(notDoneString);
+
+      otherOldCrap.countTask();
+
     }).catch((error) => {
       console.log("writedom error", error);
     });
   };
+
+
+
+
+
+
+
 
   return otherOldCrap;
 })(FbApi || {});
