@@ -11,9 +11,13 @@ $(document).ready(function(){
 	});
 
 	//get todo
-	FbApi.getTodos().then(()  => {
-		FbApi.writeToDom();
+	FbApi.firebaseCredentials().then((keys) => {
+		apiKeys = keys;
+		firebase.initializeApp(apiKeys);
+		FbApi.writeToDom(apiKeys);
 		countTask();
+
+	
 	})
 	.catch((error) => {
 		console.log("getTodos Error", error);
