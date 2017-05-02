@@ -1,20 +1,20 @@
 var FbApi = ((oldCrap) => {
 
-	oldCrap.getTodos = () => {
+	oldCrap.getTodos = (apiKeys) => {
 
 		let items = [];
 
 		return new Promise ((resolve, reject) => {
-		 $.ajax('./database/seed.json')
+		 $.ajax(`${apiKeys.databaseURL}/items.json`)
 		.done((data) => {
-			let response = data.items;
+			let response = data;
 			Object.keys(response).forEach((key) => {
 				console.log("key" , key);
 				response[key].id = key;
 				items.push(response[key]);
 			});
-			FbApi.setTodos(items);
-			resolve();
+			// FbApi.setTodos(items);
+			resolve(items);
 		})
 		.fail((error) => {
 			reject(error);
@@ -23,36 +23,59 @@ var FbApi = ((oldCrap) => {
 	  });	
 	};
 
-	  oldCrap.addTodo = (newTodo) => {
-	  	return new Promise ((resolve, reject) => {
-	  		newTodo.id = `item${FbApi.todoGetter().length}`;
-	  		console.log (newTodo);
-	  		FbApi.setSingleTodo(newTodo);
 
-	  		resolve();
-	  	});
-		
+//
+oldCrap.addTodo = (apiKeys, newTodo) => {
+		return new Promise ((resolve, reject) => {
+			$.ajax({
+				method: 'POST',
+				url:`${apiKeys.databaseURL}/items.json`,
+				data: JSON.stringify(newTodo)
+			}).done(() => {
+				resolve();
+			}).fail((error) => {
+				reject(error);
+			});
+		});
 	};
+//
+	
 
-	oldCrap.checker = (id) => {
+	oldCrap.checker = (apiKeys, id) => {
 		return new Promise((resolve, reject) => {
 			FbApi.setChecker(id);
 			resolve();
 		});
 	};
-
-
-	oldCrap.deleteTodo = (id) => {
+//
+oldCrap.deleteTodo = (apiKeys, id) => {
 		return new Promise ((resolve, reject) => {
-			FbApi.doDelete(id);
-			resolve();
+			$.ajax({
+				method: 'DELETE',
+				url:`${apiKeys.databaseURL}/items/${id}.json`
+			}).done(() => {
+				resolve();
+			}).fail((error) => {
+				reject(error);
+			});
 		});
 	};
+//
 
-oldCrap.editTodo = (id) => {
+	
+
+oldCrap.editTodo = (apiKeys, editTask, id ) => {
 		return new Promise ((resolve, reject) => {
-			FbApi.doDelete(id);
-			resolve();
+			$.ajax({
+			 	method: `PUT`,
+			 	url:`${apiKeys.databaseURL}/items/${id}.json`,
+			 	data: JSON.stringify(editTask)
+			 }).done(() => {
+			 	resolve();
+			 }).fail((error) => {
+			 	reject(error);
+	  		
+	  		});	
 		});
 	};
 
