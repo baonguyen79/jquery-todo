@@ -9,7 +9,7 @@ var FbApi = ((oldCrap) => {
 		.done((data) => {
 			let response = data;
 			Object.keys(response).forEach((key) => {
-				console.log("key" , key);
+				// console.log("key" , key);
 				response[key].id = key;
 				items.push(response[key]);
 			});

@@ -74,9 +74,9 @@ $(document).ready(function(){
 			$('.list-container').addClass('hide');
 			$('.new-container').removeClass('hide');
 			$('#add-todo-text').val(editText);
-			console.log("editText", editText);
+			// console.log("editText", editText);
 
-		})
+		});
 		
 	//
 	 // //complete todos
@@ -108,5 +108,66 @@ $(document).ready(function(){
 	}); 
 
 	
+	$('#registerButton').click(() => {
+		let email = $('#inputEmail').val();
+		let password = $('#inputPassword').val();
+		let username = $('#inputUsername').val();
+
+		let user = {email: email, password: password};   // ES6
+		// let user = {
+		// 	"email": email,
+		// 	"password": password
+		// }
+		// console.log("FbApi", FbApi);
+
+		
+
+
+		FbApi.registerUser(user).then((response) => {
+			console.log("register response", response.uid);
+			let newUser = {
+				uid: response.uid,
+				username: username
+			};
+			FbApi.addUser(apiKeys, newUser).then((response) => {
+				
+				FbApi.loginUser(user).then((response) => {
+				clearLogin();
+				$('#login-container').addClass('hide');
+				$('.main-container').removeClass('hide');
+				FbApi.writeToDom(apiKeys);
+
+		}).catch((error) => {
+			console.log("error in loginUser", error);
+		});
+			}).catch((error) => {
+				console.log("error in addUser", error);
+			});
+		}).catch((error) => {
+			console.log("error in registerUser", error);
+		}); 
+	});
+
+	let clearLogin = () => {
+		$('#inputEmail').val("");
+		$('#inputPassword').val("");
+		$('#inputUSername').val("");
+	}
+
+	$('#loginButton').click(() => {
+		let email = $('#inputEmail').val();
+		let password = $('#inputPassword').val();
+		let user = {email, password};
+
+		FbApi.loginUser(user).then((response) => {
+			clearLogin();
+			$('#login-container').addClass('hide');
+			$('.main-container').removeClass('hide');
+			FbApi.writeToDom(apiKeys);
+
+		}).catch((error) => {
+			console.log("error in loginUser", error);
+		});
+	})
 
 });

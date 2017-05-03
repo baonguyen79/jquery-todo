@@ -9,8 +9,8 @@ var FbApi =  (() => {
 				})
 				.fail((error) => {
 					reject(error);
-				})
-			})
+				});
+			});
 		}
 	};
 })();
