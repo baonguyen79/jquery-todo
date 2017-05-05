@@ -50,6 +50,20 @@ otherOldCrap.countTask = () => {
   };
 
 
+  otherOldCrap.createLogoutButton = (apiKeys) => {
+    let uid = FbApi.credentialsCurrentUser().uid;
+    FbApi.getUser(apiKeys, uid).then((user) => {
+
+      console.log("logout user", user);
+      let logoutButton = `<button class="btn btn-danger" id="logoutButton">LOGOUT ${user.username}</button>`;
+    $('#logout-container').html(logoutButton);
+
+    })
+
+  };
+
+
+
 
 
 
