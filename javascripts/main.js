@@ -17,7 +17,7 @@ $(document).ready(function(){
 	FbApi.firebaseCredentials().then((keys) => {
 		apiKeys = keys;
 		firebase.initializeApp(apiKeys);
-		FbApi.writeToDom(apiKeys);
+		// FbApi.writeToDom(apiKeys);
 
 	
 	})
@@ -77,22 +77,7 @@ $(document).ready(function(){
 			// console.log("editText", editText);
 
 		});
-		
-	//
-	 // //complete todos
-  // $('.main-container').on('click', 'input[type="checkbox"]', (event)=>{
-  // 	let myTodo = {
-  //     isCompleted: event.target.checked,
-  //     task: $(event.target).siblings('.task').html()
-  //   };
-  //   FbApi.editTodo(apiKeys, myTodo,event.target.id).then(() =>{
-  // 		FbApi.writeDom(apiKeys);
-  // 	}).catch((error) => {
-  // 		console.log("checker error", error);
-  // 	});
-  // });
 
-	//
 
 	//complete todo
 	$('.main-container').on('click', 'input[type="checkbox"]', (e) => {
